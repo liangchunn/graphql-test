@@ -1,0 +1,22 @@
+type Query {
+    book(isbn: Int!): Book
+    books(name: String): [Book]
+    booksWithTransactons: [BookWithTransaction]
+}
+type Book {
+    isbn: Int
+    name: String
+}
+type Transaction {
+    transaction_id: Int
+    isbn: Int
+    buyer: String
+    price: Float
+}
+type BookWithTransaction {
+    isbn: Int
+    name: String
+    transaction_id: Int
+    buyer: String
+    price: Float
+}

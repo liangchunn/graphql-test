@@ -11,7 +11,7 @@ Testing GraphQL integration with Express and MySQL
 2. Configure your MySQL connection and default database in `src/config.ts`
 3. Import the tables and example data with `src/mysql/dump.sql`
 4. `yarn && yarn start`
-5. Navigate to `http://localhost:8081/`
+5. Navigate to `http://localhost:8081/graphql`
 6. Paste in the query and execute: 
 ```graphql
 {

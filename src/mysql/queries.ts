@@ -1,6 +1,7 @@
 import { mysqlConnection } from './db'
+import { Book, BookWithTransaction } from '../graphql/graphql-typings'
 
-export const getAllBooks = () =>
+export const getAllBooks = (): Promise<Book[]> =>
     new Promise((resolve, reject) => {
         mysqlConnection.query('SELECT * from books', (err, rows) => {
             if (err) {
@@ -10,7 +11,7 @@ export const getAllBooks = () =>
         })
     })
 
-export const getBookByIsbn = (isbn: number): Promise<any[]> =>
+export const getBookByIsbn = (isbn: number): Promise<Book[]> =>
     new Promise((resolve, reject) => {
         mysqlConnection.query(
             'SELECT * from books WHERE isbn = ?',
@@ -24,7 +25,7 @@ export const getBookByIsbn = (isbn: number): Promise<any[]> =>
         )
     })
 
-export const getBookByName = (name: string) =>
+export const getBookByName = (name: string): Promise<Book[]> =>
     new Promise((resolve, reject) => {
         mysqlConnection.query(
             'SELECT * from books WHERE name = ?',
@@ -38,7 +39,7 @@ export const getBookByName = (name: string) =>
         )
     })
 
-export const getBooksWithTransactions = () =>
+export const getBooksWithTransactions = (): Promise<BookWithTransaction[]> =>
     new Promise((resolve, reject) => {
         mysqlConnection.query(
             'SELECT * FROM books RIGHT JOIN transactions USING (isbn)',

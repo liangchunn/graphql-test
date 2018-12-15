@@ -30,7 +30,9 @@
                     "public-instance-method"
                 ]
             }
-        ]
+        ],
+        "no-namespace": false,
+        "no-internal-module": false
     },
     "linterOptions": {
         "exclude": ["node_modules/**/*.ts"]

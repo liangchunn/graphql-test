@@ -1,12 +1,10 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
         "outDir": "build",
         "module": "commonjs",
         "target": "esnext",
         "allowJs": true,
         "moduleResolution": "node",
-        "rootDir": "src",
         "noImplicitReturns": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
@@ -14,9 +12,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
         "sourceMap": true,
-        "paths": {
-            "~/*": ["src/*"]
-        }
+        "esModuleInterop": true
     },
     "exclude": ["node_modules", "build", "coverage", "dist", "setupTests.ts"]
 }

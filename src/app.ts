@@ -1,16 +1,15 @@
-import * as express from 'express'
-import * as graphqlHTTP from 'express-graphql'
-import { schema, root } from './graphql/graphql'
+import express from 'express'
+import bodyParser from 'body-parser'
+import { ApolloServer } from 'apollo-server-express'
+import { typeDefs, resolvers } from './graphql/graphql'
 
+const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers: resolvers as any,
+})
 const app = express()
 
-app.use(
-    '/',
-    graphqlHTTP({
-        schema,
-        rootValue: root,
-        graphiql: true,
-    })
-)
+app.use(bodyParser.json())
+apolloServer.applyMiddleware({ app })
 
 export { app }

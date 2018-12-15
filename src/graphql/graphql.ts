@@ -1,13 +1,9 @@
-import { buildSchema } from 'graphql'
+import { gql } from 'apollo-server-express'
+import { getBook, getBooks, getTransactions } from './resolvers'
+import { IResolvers } from './graphql-typings'
 
-import {
-    getBookByIsbn,
-    getAllBooks,
-    getBookByName,
-    getBooksWithTransactions,
-} from '../mysql/queries'
-
-const schema = buildSchema(`
+// TODO: this should be extracted into a .graphql file and loaded using webpack
+const typeDefs = gql`
     type Query {
         book(isbn: Int!): Book
         books(name: String): [Book]
@@ -21,7 +17,7 @@ const schema = buildSchema(`
         transaction_id: Int
         isbn: Int
         buyer: String
-        price: Float   
+        price: Float
     }
     type BookWithTransaction {
         isbn: Int
@@ -30,21 +26,20 @@ const schema = buildSchema(`
         buyer: String
         price: Float
     }
-`)
+`
 
-const getBook = async (args: { isbn: number }) => {
-    const book = await getBookByIsbn(args.isbn)
-    return book.length ? book[0] : null
+const resolvers: IResolvers = {
+    Query: {
+        book(...args) {
+            return getBook(...args)
+        },
+        books(...args) {
+            return getBooks(...args)
+        },
+        booksWithTransactons(...args) {
+            return getTransactions(...args)
+        },
+    },
 }
-const getBooks = async (args: { name?: string }) =>
-    !args.name ? await getAllBooks() : await getBookByName(args.name)
 
-const getTransactions = async () => await getBooksWithTransactions()
-
-const root = {
-    book: getBook,
-    books: getBooks,
-    booksWithTransactons: getTransactions,
-}
-
-export { schema, root }
+export { typeDefs, resolvers }
